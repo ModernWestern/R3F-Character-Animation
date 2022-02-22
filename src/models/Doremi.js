@@ -2,6 +2,7 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import React, { useRef, useEffect, useState } from "react";
 
 const animations = {
+  Hi: null,
   Angry: null,
   Thoughtful: null,
   Set: () => {
@@ -20,14 +21,15 @@ const SetAnimation = (animationClips, root) => {
 
   useEffect(() => {
     actions.animation_0.reset().fadeIn(0.5).play();
-  }, [animationClips]);
+    return () => actions.animation_0.fadeOut(0.5);
+  }, animationClips);
 };
 
 export default function Model({ ...props }) {
   animations.Set();
 
   const group = useRef();
-  const { nodes, materials } = useGLTF("/models/doremi/Doremi.glb");
+  const { nodes, materials } = useGLTF("/models/doremi/SDoremi.glb");
 
   const [currentanimation, setCurrentAnimation] = useState(animations.Angry);
 
@@ -51,4 +53,4 @@ export default function Model({ ...props }) {
   );
 }
 
-useGLTF.preload("/models/doremi/Doremi.glb");
+useGLTF.preload("/models/doremi/SDoremi.glb");
